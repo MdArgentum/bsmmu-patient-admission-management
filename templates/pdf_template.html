@@ -1,0 +1,368 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+  <head>
+    <title>Patient {{ patient.name }} Invoice</title>
+    <style>
+      body {
+        font-family: 'Times New Roman', Times, serif, Arial, sans-serif;
+      }
+      .header-table {
+        width: 100%;
+        border-collapse: collapse;
+      }
+      .header-table td {
+        padding: 8px;
+      }
+      .logo {
+        width: 15%; /* 1st column width */
+      }
+      .hospital-name {
+        width: 60%; /* 2nd column width */
+        text-align: center;
+        /* Add any additional styling */
+      }
+      .hospital-name .super {
+        font-size: 30px;
+        font-weight: 900;
+      
+        margin-bottom: -20px;
+        padding-bottom: -12px;
+        margin-top: 0;
+        padding-top: 0;
+      }
+      .hospital-name .bsmmu {
+        font-size: 17px;
+        font-weight: 500;
+        margin-bottom: -10px;
+        padding-bottom: -10px;
+        margin-top: 0;
+        padding-top: 0;
+      }
+      .hospital-name .address {
+        font-size: 14px;
+        padding-top: 8px;
+        margin-top: 0px;
+      
+        margin-bottom: 0px;
+        padding-bottom: -10px;
+      }
+      .hospital-name .form_bsmmu {
+        font-size: 14px;
+        padding-top: 5px;
+        margin-top: 8px;
+        margin-bottom: -10px;
+        padding-bottom: 0px;
+        background-color: #ccc;
+        border-radius: 10px;
+      }
+      .hospital-name .admission {
+        font-size: 14px;
+        padding-top: 5px;
+        margin-top: 0px;
+        margin-bottom: -10px;
+        padding-bottom: 0px;
+      }
+      .department-details {
+        width: 25%; /* 3rd column width */
+      }
+      .details-table {
+        width: 100%;
+        border-collapse: collapse;
+        background-color: #ccc;
+        border: 1px solid black;
+      }
+      
+      .details-table th,
+      .details-table td {
+        border: 1px solid #ccc;
+      }
+      .details-table th {
+        text-align: left;
+      }
+      .details-table td {
+        text-align: left;
+        font-size: 10px;
+      }
+      .model-paragraph {
+        line-height: 1.5;
+        font-size: 18px;
+        text-align: justify;
+      }
+      .department-details .details-table tr th {
+        text-align: center;
+        width: 37%;
+        padding-left: 3px;
+      }
+      .department-details .details-table tr th,
+      .department-details .details-table tr td {
+        padding-top: 4px;
+        padding-bottom: -1px;
+        padding-left: 1px;
+        vertical-align: center;
+      }
+      .signature {
+        font-size: 18px;
+      }
+      .signature tr .left {
+        text-align: left;
+      }
+      .signature tr .right {
+        text-align: right;
+      }
+      .btn {
+        text-align: center;
+      }
+      .btn .btn2 {
+        background-color: black;
+        color: white;
+        font-size: 24px;
+        font-weight: bold;
+      }
+      .disposal {
+        text-align: center;
+        font-size: 18px;
+        padding-bottom: -10px;
+      }
+      .disposal_data {
+        text-align: right;
+        font-size: 18px;
+      }
+      .illness {
+        font-size: 18px;
+      }
+      .illness tr .left {
+        width: 30%;
+      }
+      .illness tr td table tr td ul {
+        list-style: square;
+      }
+      .footer {
+        text-align: center;
+        font-size: 12px;
+      }
+    </style>
+  </head>
+  <body>
+    <table class="header-table">
+      <tr>
+        <td class="logo">
+          <img src="http://127.0.0.1:8000/static/1.png" alt="Hospital Logo" />
+        </td>
+        <td class="hospital-name">
+          <p class="super">Super Specialized Hospital</p>
+          <p class="bsmmu">Bangabandhu Sheikh Mujib Medical University</p>
+          <p class="address">Shahbag, Dhaka-1000, Bangladesh</p>
+          <p class="form_bsmmu">Patient Information & Admission Form</p>
+          <p class="admission">(To be Filled in at the time of Admission)</p>
+        </td>
+        <td class="department-details">
+          <table class="details-table">
+            <tr>
+              <th>ID No</th>
+              <td>: {{ patient.patient_id }}</td>
+            </tr>
+            <tr>
+              <th>Center</th>
+              <td>: {{ patient.center }}</td>
+            </tr>
+            <tr>
+              <th>Department</th>
+              <td>: {{ patient.department }}</td>
+            </tr>
+            <tr>
+              <th>Word</th>
+              <td>: {{ patient.word }}</td>
+            </tr>
+            <tr>
+              <th>Bed</th>
+              <td>: {{ patient.bed }}</td>
+            </tr>
+            <!-- Add more details if needed -->
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <hr />
+    <p class="model-paragraph">
+      Patient Name:{% if patient.name %}
+        <b>{{ patient.name|upper }}</b>,
+      {% else %}
+        _____________________________
+      {% endif %}
+    </p>
+
+    <p class="model-paragraph">
+      Patient Registration No: {{ patient.regi_no }}, Date of Admission: {{ patient.created_at|date:'Y-m-d' }} and Time: {{ patient.created_at|time:'H:i:s' }} ,
+
+      Patient Name:{% if patient.name %}
+        <b>{{ patient.name }}</b>,
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %}Age:{% if patient.age %}
+        {{ patient.age }},
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _,
+      {% endif %}Sex:{% if patient.gender %}
+        {{ patient.gender|upper }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _
+      {% endif %},
+
+      Father's or Husband's Name:{% if patient.father_or_husband %}
+        {{ patient.father_or_husband }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %},
+
+      Mother's Name:{% if patient.mother %}
+        {{ patient.mother }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %},
+
+      Mailing Address:{% if patient.mailing_address %}
+        {{ patient.mailing_address }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %},
+
+      Telephone:{% if patient.phone %}
+        {{ patient.phone }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %},
+
+      Permanent Address:{% if patient.permanent_address %}
+        {{ patient.permanent_address }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %},
+
+      Contact Person Name:{% if patient.contact_person %}
+        {{ patient.contact_person }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %},
+
+      Telephone:{% if patient.contact_person_phone %}
+        {{ patient.contact_person_phone }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %},
+
+      Admitted in Cabin / Ward No:{% if patient.word %}
+        {{ patient.word }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _
+      {% endif %}Bed No:{% if patient.bed %}
+        {{ patient.bed }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %}Paying/Non-Paying
+
+      Consultant:{% if patient.con_doctor %}
+        <b>{{ patient.con_doctor }}</b>
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %},
+
+      Department:{% if patient.con_doctor_depart %}
+        {{ patient.con_doctor_depart }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _
+      {% endif %},
+
+      Consultant Phone Number:{% if patient.con_doctor_unit %}
+        {{ patient.con_doctor_unit }}
+      {% else %}
+        _ _ _ _ _ _ _ _ _ _ _
+      {% endif %}.
+    </p>
+
+    <table class="signature">
+      <tr>
+        <td class="left">
+          _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br />
+          Doctor's Signature <br />
+          With Seal
+        </td>
+        <td class="right">
+          _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br />
+          Admission Clerk <br />
+          With Seal
+        </td>
+      </tr>
+    </table>
+    <b>-----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------</b>
+    <div class="btn">
+      <span class="btn2">Disposal</span>
+    </div>
+    <p class="disposal">(To be Filled in at the time of Disposal)</p>
+    <div class="disposal_data">Date of Disposal: _ _ _ _ _ _ _ _ _</div>
+
+    <table class="illness">
+      <tr>
+        <td class="left">Principal Diagnosis</td>
+        <td>: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ __ _ _ _ _ _ _ _</td>
+      </tr>
+      <tr>
+        <td class="left">Other Diagnosis (if any)</td>
+        <td>: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</td>
+      </tr>
+      <tr class="left">
+        <td>Procedures Performed</td>
+        <td>: _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _</td>
+      </tr>
+      <tr>
+        <td class="left">Mode of Disposal</td>
+        <td>
+          <table>
+            <tr>
+              <td>
+                <ul style="list-style: square;">
+                  <li>
+                    <i class="fa fa-square-o" aria-hidden="true"></i> Discharged to Home
+                  </li>
+                  <li>DOR</li>
+                  <li>Absconded</li>
+                </ul>
+              </td>
+              <td>
+                <ul style="list-style: square;">
+                  <li>
+                    <i class="fas fa-stethoscope watermark"></i> Refered ot other hospital
+                  </li>
+                  <li>DORB</li>
+                  <li>Expired</li>
+                </ul>
+              </td>
+            </tr>
+          </table>
+        </td>
+      </tr>
+    </table>
+
+    <br /> <br />
+
+    <table class="signature">
+      <tr>
+        <td class="left">
+          _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br />
+          Consultant/Supervisor <br />
+          Signature With Seal
+        </td>
+        <td class="right">
+          _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ <br />
+          Doctor Signature <br />
+          Signature With Seal
+        </td>
+      </tr>
+    </table>
+    <p class="footer">
+      Made and Design By <a target="_blank" href="https://github.com/mdargentum">MD. RASHEL MIA</a>
+    </p>
+
+  </body>
+</html>

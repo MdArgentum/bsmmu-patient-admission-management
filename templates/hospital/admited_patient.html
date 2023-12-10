@@ -1,0 +1,82 @@
+{% extends 'base.html' %}
+
+{% block title %}
+Admited Patient List | SSH BSMMU
+{% endblock %}
+
+{% block content %}
+<div class="container">
+  <div class="row">
+    <div class="col-md-12 text-center">
+      <h4>Admited Patient List</h4>
+      <h2>Super Specialized Hospital</h2>
+      <hr />
+    </div>
+  </div>
+  
+
+{% if patients_page %}
+<table class="table table-bordered border-primary">
+  <tr class="text-center">
+    <th>Patient ID</th>
+    <th>Name</th>
+    <th>Phone</th>
+    <th>Admitted Since Time</th>
+    <th>Status</th>
+  </tr>
+  {% for patient in patients_page %}
+  <tr>
+    <td>{{ patient.patient_id }}</td>
+    <td class="h5"><a href="{% url 'patient_single' patient.pk %}">{{ patient.name | upper }}</a></td>
+    <td class="text-center">{{ patient.phone }}</td>
+    <td class="text-center">
+      {{patient.created_at | timesince}}
+    </td>
+    <td class="text-center">
+      <a href="{% url 'generate_pdf' patient.pk %}" class="btn btn-outline-info">Download Form</a>
+      <a class="btn btn-outline-danger" href="#">{{ patient.status }}</a>
+    </td>
+  </tr>
+  {% empty %}
+  <h2>NO PATIENT</h2>
+  {% endfor %}
+</table>
+<!-- Pagination -->
+
+<!-- Pagination links -->
+<nav aria-label="Page navigation example">
+  <ul class="pagination pg-blue">
+      {% if patients_page.has_previous %}
+          <li class="page-item">
+              <a class="page-link" href="?page={{ patients_page.previous_page_number }}">Previous</a>
+          </li>
+      {% else %}
+          <li class="page-item disabled">
+              <span class="page-link">Previous</span>
+          </li>
+      {% endif %}
+
+      {% for page in patients_page.paginator.page_range %}
+          <li class="page-item {% if page == patients_page.number %}active{% endif %}">
+              <a class="page-link" href="?page={{ page }}">{{ page }}</a>
+          </li>
+      {% endfor %}
+
+      {% if patients_page.has_next %}
+          <li class="page-item">
+              <a class="page-link" href="?page={{ patients_page.next_page_number }}">Next</a>
+          </li>
+      {% else %}
+          <li class="page-item disabled">
+              <span class="page-link">Next</span>
+          </li>
+      {% endif %}
+  </ul>
+</nav>
+{% else %}
+  <h1 class="text-center text-danger p-3 btn-outline-danger">There is no Patient Admited Yet</h1>
+{% endif %}
+  
+
+</div>
+{% endblock %}

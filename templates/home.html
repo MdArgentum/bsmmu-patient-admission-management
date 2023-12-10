@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    BSMMU
+{% endblock title %}
+    
+
+{% block content %}
+{% load static %}
+<style>
+    .super{
+        font-family: 'Times New Roman', Times, serif;
+    }
+    .super2{
+        font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;
+    }
+</style>
+    <div class="container my-5">
+        <div class="row mb-5">
+            <div class="col-md-12 mb-5">
+                {% include 'include/message.html' %}
+                <div class="text-center super h4">Welcome to </div>
+                <div class="text-center super h2">Super Specialized Hospital </div>
+                <div class="text-center super2 h2">Patient Admission and Service Center </div>
+                <div class="text-center">
+                    <img src="{% static 'logo.png' %}" alt="">
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    

@@ -1,0 +1,35 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+    Contact Page
+{% endblock title %}
+    
+
+{% block content %}
+    <div class="container">
+        <h4 class="text-center">Contact Us</h4>
+        <h2 class="text-center">Super Specialized Hospital </h2> <hr>
+
+        <div class="row">
+            <div class="col-md-6 mb-3">
+                <form action="" method="POST">
+                    {% csrf_token %}
+                    {{form.as_p}}
+                    <button class="btn btn-outline-info" type="submit">Message Submit</button>
+                </form>
+            </div>
+            <div class="col-md-6 mt-5">
+                <div class="h5 text-center">Email</div>
+            <div class="text-center h6">bsmmu.shh@ac.bd.com</div> <hr>
+                <div class="h5 text-center">Telephone Number</div>
+            <div class="text-center h6">+88 02 9661065,
+                +88 02 55165600</div> <hr>
+                <div class="h5 text-center">Address</div>
+            <div class="text-center h6">Bangabandhu Sheikh Mujib Medical University (BSMMU) Shahbag, Dhaka-1000.</div> <hr>
+
+            </div>
+        </div>
+    </div>
+{% endblock content %}
+    

@@ -1,0 +1,171 @@
+{% extends 'base.html' %}
+
+
+{% block title %}
+{{ patient.name }} Single Patient
+{% endblock title %}
+
+
+{% block content %}
+<div class="container">
+    <table class="table">
+        <tr>
+            <td class="text-center">
+                <img width="100" src="http://127.0.0.1:8000/static/1.png" alt="Hospital Logo" />
+            </td>
+            <td class="text-center">
+                <p class="h1">Super Specialized Hospital</p>
+                <p class="h3">Bangabandhu Sheikh Mujib Medical University</p>
+                <p class="h5">Shahbag, Dhaka-1000, Bangladesh</p>
+                <p class="btn-outline-info"><i>Patient Information & Admission Form</i></p>
+                <p class=""><b>(To be Filled in at the time of Admission)</b></p>
+            </td>
+            <td class="">
+                <table class="bg-light btn-outline-danger">
+                    <tr>
+                        <th class="p-1">ID No</th>
+                        <td class="p-1">: {{ patient.patient_id }}</td>
+                    </tr>
+                    <tr>
+                        <th class="p-1">Center</th>
+                        <td class="p-1">: {{ patient.center }}</td>
+                    </tr>
+                    <tr>
+                        <th class="p-1">Department</th>
+                        <td class="p-1">: {{ patient.department }}</td>
+                    </tr>
+                    <tr>
+                        <th class="p-1">Word</th>
+                        <td class="p-1">: {{ patient.word }}</td>
+                    </tr>
+                    <tr>
+                        <th class="p-1">Bed</th>
+                        <td class="p-1">: {{ patient.bed }}</td>
+                    </tr>
+                    <!-- Add more details if needed -->
+                </table>
+            </td>
+        </tr>
+    </table>
+    {% if patient.name %}
+    <div class="d-flex justify-content-center">
+
+        <div class="me-5">Patient Name: <b>{{ patient.name|upper }}</b></div>
+        <div class="ms-5">
+            <a class="btn bg-info" href="{% url 'generate_pdf' patient.pk %}">Admission Form Download</a>
+        </div>
+
+    </div>
+    {% else %}
+    _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+    {% endif %}
+
+
+    <p style="text-align: justify;" class="py-5">
+        Patient Registration No: {{ patient.regi_no }}, Date of Admission: {{ patient.created_at|date:'Y-m-d' }} and
+        Time: {{ patient.created_at|time:'H:i:s' }} ,
+
+        Patient Name:{% if patient.name %}
+        <b>{{ patient.name }}</b>,
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %}Age:{% if patient.age %}
+        {{ patient.age }},
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _,
+        {% endif %}Sex:{% if patient.gender %}
+        {{ patient.gender|upper }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _
+        {% endif %},
+
+        Father's or Husband's Name:{% if patient.father_or_husband %}
+        {{ patient.father_or_husband }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %},
+
+        Mother's Name:{% if patient.mother %}
+        {{ patient.mother }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %},
+
+        Mailing Address:{% if patient.mailing_address %}
+        {{ patient.mailing_address }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %},
+
+        Telephone:{% if patient.phone %}
+        {{ patient.phone }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %},
+
+        Permanent Address:{% if patient.permanent_address %}
+        {{ patient.permanent_address }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %},
+
+        Contact Person Name:{% if patient.contact_person %}
+        {{ patient.contact_person }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %},
+
+        Telephone:{% if patient.contact_person_phone %}
+        {{ patient.contact_person_phone }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %},
+
+        Admitted in Cabin / Ward No:{% if patient.word %}
+        {{ patient.word }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _
+        {% endif %}Bed No:{% if patient.bed %}
+        {{ patient.bed }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %}Paying/Non-Paying
+
+        Consultant:{% if patient.con_doctor %}
+        <b>{{ patient.con_doctor }}</b>
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %},
+
+        Department:{% if patient.con_doctor_depart %}
+        {{ patient.con_doctor_depart }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _ _ _ _
+        {% endif %},
+
+        Consultant Phone Number:{% if patient.con_doctor_unit %}
+        {{ patient.con_doctor_unit }}
+        {% else %}
+        _ _ _ _ _ _ _ _ _ _ _
+        {% endif %}.
+    </p>
+</div>
+
+
+{% if patient.status == 'released'  %}
+<div class="text-center"><a class="btn py-1 px-5 text-white btn-outline-danger mb-5 bg-danger">Patient Released disabled</a></div>
+{% else %}
+<div class="text-center"><a class="btn py-1 px-5 btn-outline-danger mb-5" href="{% url 'realised_patient' patient.pk %}">Patient Released</a></div>
+{% endif %}
+    
+
+
+<p class="footer text-center">
+    Made and Design By <a target="_blank" href="https://github.com/mdargentum">MD. RASHEL MIA</a>
+</p>
+
+</body>
+
+</html>
+
+{% endblock content %}
